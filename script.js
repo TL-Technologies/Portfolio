@@ -85,39 +85,42 @@ blackLogo.addEventListener("click", (e) => {
   scrollTo(0, 0);
 });
 
+/* limit of messages 50/month */
 contactForm.addEventListener("submit", (e) => {
   e.preventDefault();
   let myForm = contactForm;
   let formData = new FormData(myForm);
-  console.log(new URLSearchParams(formData).toString());
+  const formObj = {};
+  for (const [key, value] of formData.entries()) {
+    formObj[key] = value;
+  }
   const buttonText = sendButton.innerHTML;
-  fetch('https://formspree.io/f/xdoqlelk', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: new URLSearchParams(formData).toString(),
+  fetch("https://formspree.io/f/xdoqlelk", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(formObj),
   })
-    .then(() => {
-      sendButton.classList.add('sent')
-      sendButton.innerHTML = 'Message Sent'
-      console.log('Message Sent Successfully')
+    .then((data) => {
+      sendButton.classList.add("sent");
+      sendButton.innerHTML = "Message Sent";
+      console.log("Message Sent Successfully");
     })
     .catch((error) => {
-      sendButton.classList.add('notSent')
-      sendButton.innerHTML = `Something went wrong!`
-      console.log(error)
+      sendButton.classList.add("notSent");
+      sendButton.innerHTML = `Something went wrong!`;
+      console.log(error);
     })
     .finally(() => {
       setTimeout(() => {
-        sendButton.classList.remove('sent')
-        sendButton.classList.remove('notSent')
-        sendButton.innerHTML = buttonText
-      }, 3000)
-    })
+        sendButton.classList.remove("sent");
+        sendButton.classList.remove("notSent");
+        sendButton.innerHTML = buttonText;
+      }, 3000);
 
-  Array.from(contactForm.children).forEach((child, i) => {
-    if (i % 2) {
-      console.log(child);
-      child.value = "";
-    }
-  });
+      Array.from(contactForm.children).forEach((child, i) => {
+        if (i % 2) {
+          child.value = "";
+        }
+      });
+    });
 });
