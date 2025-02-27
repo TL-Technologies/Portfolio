@@ -10,6 +10,14 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "parcel": "^2.12.0"
+    "cssnano": "^6.1.2",
+    "parcel": "^2.12.0",
+    "postcss": "^8.5.1"
+  },
+  "main": "matter.js",
+  "keywords": [],
+  "dependencies": {
+    "autoprefixer": "^10.4.20",
+    "tailwindcss": "^4.0.0"
   }
 }
